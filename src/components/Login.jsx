@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import axios from "axios";
 
-import { toggelAuth } from "../Redux/isAuth/action";
+import { toggelAuth, username } from "../Redux/isAuth/action";
 
 import { useNavigate } from "react-router-dom";
 
@@ -31,6 +31,7 @@ export const Login = () => {
            navigate("/orders")
         }
         dispatch(toggelAuth(false))
+        dispatch(username(response.data[0].username))
 			})
 			.catch(function (error) {
 				// handle error

@@ -1,7 +1,33 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { store } from "../Redux/store";
+import { useDispatch } from "react-redux";
+
+import axios from "axios";
+import { findorders } from "../Redux/neworders/action";
+
 export const NewOrder = () => {
   // Get data of only this user. store it in redux
   // GET /orders?owner_name=john will give you all order of user john
   //  on submit click create a new order, new order has status `Not Accepted`
+   const user=useSelector((store)=>store.username.username)
+   const dispatch=useDispatch()
+   useEffect(()=>{
+     axios.get(`http://localhost:8080/orders?owner_name=${user}`)
+			.then(function (response) {
+				// handle success
+				console.log(response.data);
+        dispatch(findorders(response.data))
+			})
+			.catch(function (error) {
+				// handle error
+				console.log(error);
+			})
+			.then(function () {
+				// always executed
+			});
+   },[])
+   
   return (
     <div>
       <div className="form">
@@ -17,6 +43,7 @@ export const NewOrder = () => {
           type="text"
           name="owner_name"
           placeholder="yourname"
+          value={user}
           readOnly
         />
         <input
