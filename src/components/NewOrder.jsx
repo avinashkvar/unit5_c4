@@ -16,7 +16,6 @@ export const NewOrder = () => {
      axios.get(`http://localhost:8080/orders?owner_name=${user}`)
 			.then(function (response) {
 				// handle success
-				console.log(response.data);
         dispatch(findorders(response.data))
 			})
 			.catch(function (error) {
@@ -28,6 +27,8 @@ export const NewOrder = () => {
 			});
    },[])
    
+   const orders = useSelector((store)=>store.orders.orders)
+   console.log(orders)
   return (
     <div>
       <div className="form">
@@ -65,12 +66,14 @@ export const NewOrder = () => {
 
         {/* Here create a div for every oreder, filter them before based on `showUnfinished` */}
         <div className="past-orders">
-          <span className="id"></span>. <span className="problem"></span>{" "}
-          <span className="cost">
-            {/* if status is not accepted then keep it empty otherwise show cost like $1234 */}
-          </span>
-          <p className="status">Status: </p>
+          {orders.map((e)=>(
+           <span className="id">{e.id}</span>,
+           <span className="problem">{e.problem}</span>,
+           <span className="cost">{e.cost}</span>,
+           <p className="status">Status:{e.status} </p>,
           <hr />
+          ))}
+        
         </div>
       </div>
     </div>
