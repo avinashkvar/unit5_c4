@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 
 function App() {
   const isAuth = useSelector((store=>store.isAuth.isAuth))
+  console.log(isAuth)
 	return (
 		<div className="App">
 			<div>
